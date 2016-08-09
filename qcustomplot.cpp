@@ -95,7 +95,7 @@ void QCustomPlot::valueChangedSlot(int number)
 
     QVector<double> x(1000), y(1000); // initialize with entries 0..100
 
-    float number2 = number * 0.01;
+    float number2 = number- 180;
 
 
     for (int i=0; i<1000; ++i)

@@ -15,14 +15,28 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     settingsdialog.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    chartthread.cpp \
+    mainwidget.cpp \
+    geometryengine.cpp \
+    streamdecoder.cpp
 
 HEADERS  += mainwindow.h \
     settingsdialog.h \
-    qcustomplot.h
+    qcustomplot.h \
+    chartthread.h \
+    mainwidget.h \
+    geometryengine.h \
+    streamdecoder.h
 
 FORMS    += mainwindow.ui \
     settingsdialog.ui
 
 RESOURCES += \
-    images/resources.qrc
+    images/resources.qrc \
+    textures.qrc \
+    shaders.qrc
+
+DISTFILES += \
+    vshader.glsl \
+    fshader.glsl

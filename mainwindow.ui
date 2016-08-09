@@ -59,21 +59,11 @@
         <property name="title">
          <string>GroupBox</string>
         </property>
-        <widget class="QOpenGLWidget" name="openGLWidget">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>211</width>
-           <height>111</height>
-          </rect>
-         </property>
-        </widget>
         <widget class="QLabel" name="label">
          <property name="geometry">
           <rect>
-           <x>450</x>
-           <y>40</y>
+           <x>370</x>
+           <y>30</y>
            <width>59</width>
            <height>14</height>
           </rect>
@@ -88,8 +78,8 @@
         <widget class="QLabel" name="label_2">
          <property name="geometry">
           <rect>
-           <x>450</x>
-           <y>60</y>
+           <x>370</x>
+           <y>50</y>
            <width>59</width>
            <height>14</height>
           </rect>
@@ -101,8 +91,8 @@
         <widget class="QLabel" name="label_3">
          <property name="geometry">
           <rect>
-           <x>450</x>
-           <y>80</y>
+           <x>360</x>
+           <y>70</y>
            <width>59</width>
            <height>14</height>
           </rect>
@@ -123,6 +113,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QSlider" name="horizontalSlider">
+            <property name="maximum">
+             <number>359</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -130,6 +123,9 @@
           </item>
           <item>
            <widget class="QSlider" name="horizontalSlider_2">
+            <property name="maximum">
+             <number>359</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -137,6 +133,9 @@
           </item>
           <item>
            <widget class="QSlider" name="horizontalSlider_3">
+            <property name="maximum">
+             <number>359</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -147,14 +146,34 @@
         <widget class="QPushButton" name="pushButton">
          <property name="geometry">
           <rect>
-           <x>600</x>
-           <y>80</y>
+           <x>260</x>
+           <y>110</y>
            <width>80</width>
            <height>22</height>
           </rect>
          </property>
          <property name="text">
           <string>PushButton</string>
+         </property>
+        </widget>
+        <widget class="QPlainTextEdit" name="plainTextEdit">
+         <property name="geometry">
+          <rect>
+           <x>440</x>
+           <y>20</y>
+           <width>361</width>
+           <height>131</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="MainWidget" name="openglWidget" native="true">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>191</width>
+           <height>121</height>
+          </rect>
          </property>
         </widget>
        </widget>
@@ -268,6 +287,12 @@
    <slots>
     <slot>valueChangedSlot(int)</slot>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>MainWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">mainwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
