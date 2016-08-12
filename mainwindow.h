@@ -73,7 +73,15 @@ private:
     bool d_pauseRecording;
     bool d_stopRecording;
 
-    void callFromThread();
+    int d_xmin;
+    int d_xmax;
+    int d_ymin;
+    int d_ymax;
+    int d_zmin;
+    int d_zmax;
+
+
+
     void showStatusMessage(const QString &message);
     float decodeFloat(QString inString);
     StreamDecoder streamDecoder;

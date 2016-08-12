@@ -100,11 +100,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-        connect(ui->myGLWidget, SIGNAL(xRotationChanged(int)), ui->horizontalSlider, SLOT(setValue(int)));
-        connect(ui->myGLWidget, SIGNAL(yRotationChanged(int)), ui->horizontalSlider_2, SLOT(setValue(int)));
-        connect(ui->myGLWidget, SIGNAL(zRotationChanged(int)), ui->horizontalSlider_3, SLOT(setValue(int)));
+   //     connect(ui->myGLWidget, SIGNAL(xRotationChanged(int)), ui->horizontalSlider, SLOT(setValue(int)));
+   //    connect(ui->myGLWidget, SIGNAL(yRotationChanged(int)), ui->horizontalSlider_2, SLOT(setValue(int)));
+   //     connect(ui->myGLWidget, SIGNAL(zRotationChanged(int)), ui->horizontalSlider_3, SLOT(setValue(int)));
 
         timer.start(12, this);
+
+        d_xmin = -1000;
+        d_xmax = 1000;
+        d_ymin = -1000;
+        d_ymax = 1000;
+        d_zmin = -1000;
+        d_zmax = 1000;
+
+
 }
 
 
@@ -227,8 +236,6 @@ void MainWindow::readData()
 
        if (qstr.size() == 38)
        {
-      //   ui->plainTextEdit->appendPlainText(QString::number(qstr.length()) + '\n');
-
            streamDecoder.setStreamLine(data);
            streamDecoder.updateEurlers(eurlers);
 
@@ -246,49 +253,72 @@ void MainWindow::readData()
       for (int i = 0; i < eurlers.size(); i++)
       {
           if (i == 0)
-          {
+          {             
+              int myX = static_cast<int>(eurlers[0]);
+
+              d_xmin = ui->horizontalSlider->value() - 180;
+              d_xmax = ui->horizontalSlider_4->value() - 180;
+
+
+              if (myX >= d_xmin && myX <= d_xmax)
+              {
+                    ui->chart_1->graph(0)->setPen(QPen(Qt::blue));
+              }
+              else
+              {
+                    ui->chart_1->graph(0)->setPen(QPen(Qt::red));
+              }
+
               ui->chart_1->graph(0)->addData(counter, eurlers[0]);
               ui->chart_1->replot();
-             // ui->chart_1->
-
               ui->chart_1->xAxis->rescale(true);
-
-
               counter++;
-
-        //      if (counter % 10 == 0)
-
           }
 
           if (i == 1)
           {
+              int myY = static_cast<int>(eurlers[1]);
+
+              d_ymin = ui->sliderZMin->value() - 180;
+              d_ymax = ui->sliderZMax->value() - 180;
+
+
+              if (myY >= d_ymin && myY <= d_ymax)
+              {
+                    ui->chart_2->graph(0)->setPen(QPen(Qt::blue));
+              }
+              else
+              {
+                    ui->chart_2->graph(0)->setPen(QPen(Qt::red));
+              }
+
               ui->chart_2->graph(0)->addData(counter1, eurlers[1]);
               ui->chart_2->replot();
-            //  ui->chart_2->rescaleAxes(true);
-
               ui->chart_2->xAxis->rescale(true);
-
-
               counter1++;
-          //    if (counter1 % 10 == 0)
-
 
           }
-
-
           if (i == 2)
           {
-              ui->chart_3->graph(0)->addData(counter1, eurlers[2]);
+              int myZ = static_cast<int>(eurlers[2]);
+
+              d_zmin = ui->sliderYMin->value() - 180;
+              d_zmax = ui->sliderYMax->value() - 180;
+
+
+              if (myZ >= d_zmin && myZ <= d_zmax)
+              {
+                    ui->chart_3->graph(0)->setPen(QPen(Qt::blue));
+              }
+              else
+              {
+                    ui->chart_3->graph(0)->setPen(QPen(Qt::red));
+              }
+
+              ui->chart_3->graph(0)->addData(counter2, eurlers[2]);
               ui->chart_3->replot();
-           //   ui->chart_3->rescaleAxes(true);
-
-                       ui->chart_3->xAxis->rescale(true);
-
+              ui->chart_3->xAxis->rescale(true);
               counter2++;
-
-           //   if (counter2 % 10 == 0)
-
-
           }
       }
     }
@@ -298,25 +328,10 @@ void MainWindow::readData()
 
 void MainWindow::timerEvent(QTimerEvent *)
 {
-    // Decrease angular speed (friction)
-/*    angularSpeed *= 0.99;
-
-    // Stop rotation when speed goes below threshold
-    if (angularSpeed < 0.01) {
-        angularSpeed = 0.0;
-    } else {
-        // Update rotation
-        rotation = QQuaternion::fromAxisAndAngle(rotationAxis, angularSpeed) * rotation;
-
-        // Request an update
-        update();
-    }
-*/
     ui->myGLWidget->setYRotation(static_cast<int>(eurlers[0]));
     ui->myGLWidget->setXRotation(static_cast<int>(eurlers[1]));
     ui->myGLWidget->setZRotation(static_cast<int>(eurlers[2]));
     ui->myGLWidget->updateGL();
-
 }
 
 
@@ -334,14 +349,6 @@ void MainWindow::handleError(QSerialPort::SerialPortError error)
 }
 
 
-
-void MainWindow::callFromThread()
-{
-
-
-
-
-}
 
  void MainWindow::pressRecordingButton(bool &button)
  {

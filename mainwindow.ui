@@ -130,6 +130,9 @@
            <property name="pageStep">
             <number>15</number>
            </property>
+           <property name="value">
+            <number>360</number>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -159,7 +162,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="horizontalSlider_2">
+          <widget class="QSlider" name="sliderYMin">
            <property name="maximum">
             <number>360</number>
            </property>
@@ -198,7 +201,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="horizontalSlider_6">
+          <widget class="QSlider" name="sliderYMax">
            <property name="maximum">
             <number>360</number>
            </property>
@@ -207,6 +210,9 @@
            </property>
            <property name="pageStep">
             <number>15</number>
+           </property>
+           <property name="value">
+            <number>360</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -231,7 +237,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="horizontalSlider_3">
+          <widget class="QSlider" name="sliderZMin">
            <property name="maximum">
             <number>360</number>
            </property>
@@ -270,7 +276,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="horizontalSlider_5">
+          <widget class="QSlider" name="sliderZMax">
            <property name="maximum">
             <number>360</number>
            </property>
@@ -279,6 +285,9 @@
            </property>
            <property name="pageStep">
             <number>15</number>
+           </property>
+           <property name="value">
+            <number>360</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -302,15 +311,15 @@
        </item>
       </layout>
       <zorder>horizontalSlider_4</zorder>
-      <zorder>horizontalSlider_5</zorder>
-      <zorder>horizontalSlider_6</zorder>
+      <zorder>sliderZMax</zorder>
+      <zorder>sliderYMax</zorder>
       <zorder>label</zorder>
       <zorder>label_2</zorder>
       <zorder>label_3</zorder>
       <zorder>label_4</zorder>
       <zorder>label_5</zorder>
       <zorder>label_6</zorder>
-      <zorder>horizontalSlider_2</zorder>
+      <zorder>sliderYMin</zorder>
      </widget>
     </item>
    </layout>
@@ -436,8 +445,8 @@
  </customwidgets>
  <tabstops>
   <tabstop>horizontalSlider</tabstop>
-  <tabstop>horizontalSlider_2</tabstop>
-  <tabstop>horizontalSlider_3</tabstop>
+  <tabstop>sliderYMin</tabstop>
+  <tabstop>sliderZMin</tabstop>
  </tabstops>
  <resources>
   <include location="images/resources.qrc"/>
@@ -460,7 +469,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_2</sender>
+   <sender>sliderYMin</sender>
    <signal>valueChanged(int)</signal>
    <receiver>chart_3</receiver>
    <slot>valueChangedSlot(int)</slot>
@@ -476,7 +485,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_3</sender>
+   <sender>sliderZMin</sender>
    <signal>valueChanged(int)</signal>
    <receiver>chart_2</receiver>
    <slot>valueChangedSlot(int)</slot>
@@ -508,7 +517,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_2</sender>
+   <sender>sliderYMin</sender>
    <signal>valueChanged(int)</signal>
    <receiver>myGLWidget</receiver>
    <slot>setYRotation(int)</slot>
@@ -524,7 +533,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_3</sender>
+   <sender>sliderZMin</sender>
    <signal>valueChanged(int)</signal>
    <receiver>myGLWidget</receiver>
    <slot>setZRotation(int)</slot>
@@ -556,7 +565,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_6</sender>
+   <sender>sliderYMax</sender>
    <signal>valueChanged(int)</signal>
    <receiver>chart_3</receiver>
    <slot>valueChangedSlotMax(int)</slot>
@@ -572,7 +581,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider_5</sender>
+   <sender>sliderZMax</sender>
    <signal>valueChanged(int)</signal>
    <receiver>chart_2</receiver>
    <slot>valueChangedSlotMax(int)</slot>

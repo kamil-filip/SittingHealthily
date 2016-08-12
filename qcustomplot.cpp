@@ -94,7 +94,7 @@ void QCustomPlot::valueChangedSlot(int number)
 {
     auto arrow = static_cast<QCPItemStraightLine*>(this->item(0));
 
-    int myNumber = number - 160;
+    int myNumber = number - 180;
     arrow->point1->setCoords(0, myNumber);
     arrow->point2->setCoords(100, myNumber);
 }
@@ -103,7 +103,7 @@ void QCustomPlot::valueChangedSlotMax(int number)
 {
     auto arrow = static_cast<QCPItemStraightLine*>(this->item(1));
 
-    int myNumber = number - 160;
+    int myNumber = number - 180;
     arrow->point1->setCoords(0, myNumber);
     arrow->point2->setCoords(100, myNumber);
 }
