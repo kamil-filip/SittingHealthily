@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport
+QT       += core gui serialport opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     chartthread.cpp \
     mainwidget.cpp \
     geometryengine.cpp \
-    streamdecoder.cpp
+    streamdecoder.cpp \
+    glwidget.cpp \
+    myglwidget.cpp
 
 HEADERS  += mainwindow.h \
     settingsdialog.h \
@@ -27,7 +29,9 @@ HEADERS  += mainwindow.h \
     chartthread.h \
     mainwidget.h \
     geometryengine.h \
-    streamdecoder.h
+    streamdecoder.h \
+    glwidget.h \
+    myglwidget.h
 
 FORMS    += mainwindow.ui \
     settingsdialog.ui

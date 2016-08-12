@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include <thread>
+#include <QDesktopWidget>
 
 
 
@@ -8,10 +8,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    MainWindow window;
+    window.show();
 
-
-    w.show();
 
     return a.exec();
 }

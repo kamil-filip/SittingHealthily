@@ -20,6 +20,9 @@ public:
     StreamDecoder(QString const &data);
 
     std::vector<float> getQuaternions();
+    std::vector<float> getEurlers();
+    void updateEurlers(std::vector<float> &eurlerAngles);
+
     void setStreamLine(QByteArray const &data);
     void setStreamLine(std::string const &data);
     void setStreamLine(QString const &data);
@@ -30,6 +33,10 @@ private:
     std::vector<unsigned char> unhex(std::string const &inString);
     std::vector<std::string> explode(std::string const &inString, char const & curChar);
     float decodeFloat(std::string const &inString);
+    std::vector<float> quaternionToEuler(std::vector<float> const  &q);
+
+
+
 
 };
 

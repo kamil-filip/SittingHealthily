@@ -10,16 +10,21 @@
 #include <chrono>
 #include <cmath>
 
+#include "glwidget.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    d_startRecording(false),
+    d_pauseRecording(false),
+    d_stopRecording(false)
 {
     ui->setupUi(this);
 
     serial = new QSerialPort(this);
     settings = new SettingsDialog;
-
+    eurlers = {0.0, 0.0, 0.0};
 
     ui->actionActionConnect->setEnabled(true);
     ui->actionActionDisconnect->setEnabled(false);
@@ -40,49 +45,67 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(serial, &QSerialPort::readyRead, this, &MainWindow::readData);
 
 
-    connect(ui->pushButton, SIGNAL (released()), this, SLOT (handleButton()));
-
-
-
         ui->chart_1->addGraph();
         ui->chart_2->addGraph();
         ui->chart_3->addGraph();
 
 
+        QCPItemStraightLine *arrow0 = new QCPItemStraightLine(ui->chart_1);
+        QCPItemStraightLine *arrow1 = new QCPItemStraightLine(ui->chart_2);
+        QCPItemStraightLine *arrow2 = new QCPItemStraightLine(ui->chart_3);
 
 
+        QCPItemStraightLine *arrow0_max = new QCPItemStraightLine(ui->chart_1);
+        QCPItemStraightLine *arrow1_max = new QCPItemStraightLine(ui->chart_2);
+        QCPItemStraightLine *arrow2_max = new QCPItemStraightLine(ui->chart_3);
+
+        arrow0->setPen(QPen(Qt::green));
+        arrow1->setPen(QPen(Qt::green));
+        arrow2->setPen(QPen(Qt::green));
+
+        arrow0->point1->setCoords(0, 0);
+        arrow0->point2->setCoords(100, 0);
+        arrow1->point1->setCoords(0, 0);
+        arrow1->point2->setCoords(100, 0);
+        arrow2->point1->setCoords(0, 0);
+        arrow2->point2->setCoords(100, 0);
+
+        arrow0_max->setPen(QPen(Qt::red));
+        arrow1_max->setPen(QPen(Qt::red));
+        arrow2_max->setPen(QPen(Qt::red));
+
+        arrow0_max->point1->setCoords(0, 0);
+        arrow0_max->point2->setCoords(100, 0);
+        arrow1_max->point1->setCoords(0, 0);
+        arrow1_max->point2->setCoords(100, 0);
+        arrow2_max->point1->setCoords(0, 0);
+        arrow2_max->point2->setCoords(100, 0);
+
+
+
+        ui->chart_1->addItem(arrow0);
+        ui->chart_2->addItem(arrow1);
+        ui->chart_3->addItem(arrow2);
+
+        ui->chart_1->yAxis->setRange(-190,190);
+        ui->chart_2->yAxis->setRange(-190,190);
+        ui->chart_3->yAxis->setRange(-190,190);
+
+
+
+
+        ui->chart_1->addItem(arrow0_max);
+        ui->chart_2->addItem(arrow1_max);
+        ui->chart_3->addItem(arrow2_max);
+
+
+
+        connect(ui->myGLWidget, SIGNAL(xRotationChanged(int)), ui->horizontalSlider, SLOT(setValue(int)));
+        connect(ui->myGLWidget, SIGNAL(yRotationChanged(int)), ui->horizontalSlider_2, SLOT(setValue(int)));
+        connect(ui->myGLWidget, SIGNAL(zRotationChanged(int)), ui->horizontalSlider_3, SLOT(setValue(int)));
+
+        timer.start(12, this);
 }
-
-
-void MainWindow::updateChart1()
-{
-
-    ui->label->setText("Ala ma kta");
-}
-
-void MainWindow::updateChart2()
-{
-
-
-}
-
-
-void MainWindow::handleButton()
-{
-
-
-
-}
-
-void MainWindow::updateChart3()
-{
-
-
-
-
-
-}
-
 
 
 void MainWindow::openSerialPort()
@@ -197,158 +220,102 @@ std::vector<float> MainWindow::quaternionToEuler(std::vector<float> const  &q)
 void MainWindow::readData()
 {
 
-    streamDecoder.setStreamLine(serial->readLine());
-
-    //StreamDecoder ds(serial->readLine());
-    std::vector<float> quaternions = streamDecoder.getQuaternions();
-
-    ui->plainTextEdit->appendPlainText("=================================\n");
-    for (auto& it : quaternions)
+    if(d_startRecording)
     {
-        QString str = QString::number(it);
-        ui->plainTextEdit->appendPlainText(" q : " +  str);
-    }
-    ui->plainTextEdit->appendPlainText("=================================\n");
+       QByteArray data = serial->readLine();
+       QString qstr = QString(data);
+
+       if (qstr.size() == 38)
+       {
+      //   ui->plainTextEdit->appendPlainText(QString::number(qstr.length()) + '\n');
+
+           streamDecoder.setStreamLine(data);
+           streamDecoder.updateEurlers(eurlers);
+
+           ui->plainTextEdit->appendPlainText("=================================\n");
+           for (auto& it : eurlers)
+           {
+               QString str = QString::number(it);
+               ui->plainTextEdit->appendPlainText(" q : " +  str);
+           }
+           ui->plainTextEdit->appendPlainText("=================================\n");
+
+       }
 
 
-
-  /*
-    QByteArray data = serial->readLine();
-    float q[4];
-
-     std::vector<std::string> vecOfIn = explode(QString(data).toStdString(), ',');
-     std::string str = std::to_string(vecOfIn.size());
-
-     if (vecOfIn.size() == 4)
-    {
-
-      std::vector<float> quaternions;
-      ui->plainTextEdit->appendPlainText("=================================\n");
-      for (size_t idx = 0; idx < vecOfIn.size(); idx++)
+      for (int i = 0; i < eurlers.size(); i++)
       {
-          QString temp = QString::fromStdString(vecOfIn[idx]);
-
-          if (temp.length() == 8)
+          if (i == 0)
           {
+              ui->chart_1->graph(0)->addData(counter, eurlers[0]);
+              ui->chart_1->replot();
+             // ui->chart_1->
 
-              q[idx] = decodeFloat(vecOfIn[idx]);
-              QString str = QString::number(q[idx]);
-              ui->plainTextEdit->appendPlainText(" q" + QString::number(idx) + ": " +  str);
+              ui->chart_1->xAxis->rescale(true);
+
+
+              counter++;
+
+        //      if (counter % 10 == 0)
+
           }
 
+          if (i == 1)
+          {
+              ui->chart_2->graph(0)->addData(counter1, eurlers[1]);
+              ui->chart_2->replot();
+            //  ui->chart_2->rescaleAxes(true);
+
+              ui->chart_2->xAxis->rescale(true);
+
+
+              counter1++;
+          //    if (counter1 % 10 == 0)
+
+
+          }
+
+
+          if (i == 2)
+          {
+              ui->chart_3->graph(0)->addData(counter1, eurlers[2]);
+              ui->chart_3->replot();
+           //   ui->chart_3->rescaleAxes(true);
+
+                       ui->chart_3->xAxis->rescale(true);
+
+              counter2++;
+
+           //   if (counter2 % 10 == 0)
+
+
+          }
       }
-     ui->plainTextEdit->appendPlainText("=================================\n");
-
     }
 
-    */
+}
 
 
+void MainWindow::timerEvent(QTimerEvent *)
+{
+    // Decrease angular speed (friction)
+/*    angularSpeed *= 0.99;
 
+    // Stop rotation when speed goes below threshold
+    if (angularSpeed < 0.01) {
+        angularSpeed = 0.0;
+    } else {
+        // Update rotation
+        rotation = QQuaternion::fromAxisAndAngle(rotationAxis, angularSpeed) * rotation;
 
-/*
-    std::lock_guard<std::mutex> lock(myMutex);
-
-    QByteArray data = serial->readLine();
-    std::vector<std::string> vecOfIn = explode(QString(data).toStdString(), ',');
-    std::vector<float> quaternions;
-    float q[40];
+        // Request an update
+        update();
+    }
 */
-
- /*
-
-
-        for (size_t idx = 0; idx < vecOfIn.size(); idx++)
-        {
-
-
-              quaternions.push_back(decodeFloat(vecOfIn[idx]));
-
-                /*q[idx] = decodeFloat(vecOfIn[idx]);
-                  QString str = QString::number(q[idx]);
-
-              ui->plainTextEdit->appendPlainText(" q" + QString::number(idx) + ": " +  str);*/
-
-
-     //   }
-
-
-/*
-          std::vector<float> eurler = quaternionToEuler(quaternions);
-
-          for (int i = 0; i < eurler.size(); i++)
-          {
-            //  QString str = QString::number(eurler[i] * 180 / 3.1415926);
-             // ui->plainTextEdit->appendPlainText(" q" + QString::number(i) + ": " +  str);
-
-
-              if (i == 0)
-              {
-                  ui->chart_1->graph(0)->addData(counter, eurler[0] * 180 / 3.1415926);
-                  ui->chart_1->replot();
-                  ui->chart_1->rescaleAxes(true);
-                  counter++;
-
-                  ui->openglWidget->setX(eurler[0] * 180 / 3.1415926);
-              }
-
-              if (i == 1)
-              {
-                  ui->chart_2->graph(0)->addData(counter1, eurler[1] * 180 / 3.1415926);
-                  ui->chart_2->replot();
-                  ui->chart_2->rescaleAxes(true);
-                  counter1++;
-
-                  ui->openglWidget->setY(eurler[1] * 180 / 3.1415926);
-              }
-
-
-              if (i == 2)
-              {
-                  ui->chart_3->graph(0)->addData(counter1, eurler[2] * 180 / 3.1415926);
-                  ui->chart_3->replot();
-                  ui->chart_3->rescaleAxes(true);
-                  counter2++;
-
-                  ui->openglWidget->setZ(eurler[2] * 180 / 3.1415926);
-
-              }
-
-
-
-
-          }
-          */
- /*
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-
-
-    QByteArray data = serial->readLine();
-
-    DecodeStream ds(data);
-
-    std::vector<float> floats = ds.getFloats();
-
-
-    if (floats.size() > 3)
-    {
-        std::string output;
-
-
-
-        for (auto&it : floats)
-        {
-            output += std::to_string(it) + " ";
-        }
-
-        output += '\n';
-        ui->plainTextEdit->appendPlainText("===================================================\n");
-        ui->plainTextEdit->appendPlainText(QString::fromStdString(output));
-        ui->plainTextEdit->appendPlainText("===================================================\n");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-    */
+    ui->myGLWidget->setYRotation(static_cast<int>(eurlers[0]));
+    ui->myGLWidget->setXRotation(static_cast<int>(eurlers[1]));
+    ui->myGLWidget->setZRotation(static_cast<int>(eurlers[2]));
+    ui->myGLWidget->updateGL();
 
 }
 
@@ -376,43 +343,40 @@ void MainWindow::callFromThread()
 
 }
 
+ void MainWindow::pressRecordingButton(bool &button)
+ {
+
+
+ }
+
 void MainWindow::startRecording()
 {
-
-    /* for (int i = 0; i < 100 ; i++)
-     {
-         ui->chart_1->graph(0)->addData(i, i);
-         ui->chart_1->replot();
-         std::this_thread::sleep_for (std::chrono::milliseconds(100));
-         ui->chart_1->rescaleAxes(true);
-
-         ui->chart_2->graph(0)->addData(i, i);
-         ui->chart_2->replot();
-         std::this_thread::sleep_for (std::chrono::milliseconds(100));
-         ui->chart_2->rescaleAxes(true);
-
-
-         ui->chart_3->graph(0)->addData(i, i);
-         ui->chart_3->replot();
-         std::this_thread::sleep_for (std::chrono::milliseconds(100));
-         ui->chart_3->rescaleAxes(true);
-     }
-    */
-
-
-
-
-
+    d_stopRecording = false;
+    d_pauseRecording = false;
+    d_startRecording = true;
+    ui->actionStartRecording->setEnabled(false);
+    ui->actionStopRecording->setEnabled(true);
+    ui->actionPauseRecording->setEnabled(true);
 }
 
 void MainWindow::pauseRecording()
 {
-
+    d_stopRecording = false;
+    d_pauseRecording = true;
+    d_startRecording = false;
+    ui->actionStartRecording->setEnabled(true);
+    ui->actionStopRecording->setEnabled(true);
+    ui->actionPauseRecording->setEnabled(false);
 }
 
 void MainWindow::stopRecording()
 {
-
+    d_stopRecording = true;
+    d_pauseRecording = false;
+    d_startRecording = false;
+    ui->actionStartRecording->setEnabled(true);
+    ui->actionStopRecording->setEnabled(false);
+    ui->actionPauseRecording->setEnabled(true);
 }
 
 

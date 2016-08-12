@@ -92,43 +92,20 @@ void QCPPainter::setPen(const QPen &pen)
 
 void QCustomPlot::valueChangedSlot(int number)
 {
+    auto arrow = static_cast<QCPItemStraightLine*>(this->item(0));
 
-    QVector<double> x(1000), y(1000); // initialize with entries 0..100
+    int myNumber = number - 160;
+    arrow->point1->setCoords(0, myNumber);
+    arrow->point2->setCoords(100, myNumber);
+}
 
-    float number2 = number- 180;
+void QCustomPlot::valueChangedSlotMax(int number)
+{
+    auto arrow = static_cast<QCPItemStraightLine*>(this->item(1));
 
-
-    for (int i=0; i<1000; ++i)
-    {
-      x[i] += i ; // x goes from -1 to 1
-      y[i] = number2; // let's plot a quadratic function
-    }
-
-     this->addGraph();
-     this->graph(1)->setData(x, y);
-     this->replot();
-
-    //painter->drawLine(QPoint(0,0), QPoint(6,6));
-
-
-    /*
-     *
-     *
-     *
-            QVector<double> x(101), y(101); // initialize with entries 0..100
-               for (int i=0; i<101; ++i)
-               {
-                 x[i] = i/50.0 - 1; // x goes from -1 to 1
-                 y[i] = x[i]*x[i]; // let's plot a quadratic function
-               }
-               // create graph and assign data to it:
-               ui->chart_1->addGraph();
-               ui->chart_1->graph(0)->setData(x, y);
-               ui->chart_1->xAxis->setRange(-1, 1);
-               ui->chart_1->yAxis->setRange(0, 1);
-               ui->chart_1->replot();
-                       */
-
+    int myNumber = number - 160;
+    arrow->point1->setCoords(0, myNumber);
+    arrow->point2->setCoords(100, myNumber);
 }
 
 /*! \overload

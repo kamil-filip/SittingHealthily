@@ -14,10 +14,10 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
        <widget class="QGroupBox" name="groupBox">
         <property name="enabled">
          <bool>true</bool>
@@ -28,11 +28,17 @@
           <verstretch>6</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>600</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="title">
          <string>GroupBox</string>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <widget class="QCustomPlot" name="chart_1" native="true"/>
@@ -48,137 +54,264 @@
         </layout>
        </widget>
       </item>
-      <item>
-       <widget class="QGroupBox" name="groupBox_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>3</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="title">
-         <string>GroupBox</string>
-        </property>
-        <widget class="QLabel" name="label">
-         <property name="geometry">
-          <rect>
-           <x>370</x>
-           <y>30</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="buddy">
-          <cstring>label</cstring>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_2">
-         <property name="geometry">
-          <rect>
-           <x>370</x>
-           <y>50</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_3">
-         <property name="geometry">
-          <rect>
-           <x>360</x>
-           <y>70</y>
-           <width>59</width>
-           <height>14</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>270</x>
-           <y>30</y>
-           <width>86</width>
-           <height>59</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QSlider" name="horizontalSlider">
-            <property name="maximum">
-             <number>359</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSlider" name="horizontalSlider_2">
-            <property name="maximum">
-             <number>359</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSlider" name="horizontalSlider_3">
-            <property name="maximum">
-             <number>359</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QPushButton" name="pushButton">
-         <property name="geometry">
-          <rect>
-           <x>260</x>
-           <y>110</y>
-           <width>80</width>
-           <height>22</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-        <widget class="QPlainTextEdit" name="plainTextEdit">
-         <property name="geometry">
-          <rect>
-           <x>440</x>
-           <y>20</y>
-           <width>361</width>
-           <height>131</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="MainWidget" name="openglWidget" native="true">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>30</y>
-           <width>191</width>
-           <height>121</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-      </item>
      </layout>
+    </item>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string>Sensor Properties</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="MyGLWidget" name="myGLWidget" native="true"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>X min</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider">
+           <property name="maximum">
+            <number>360</number>
+           </property>
+           <property name="singleStep">
+            <number>1</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+           <property name="tickInterval">
+            <number>15</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>X max</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_4">
+           <property name="maximum">
+            <number>360</number>
+           </property>
+           <property name="singleStep">
+            <number>16</number>
+           </property>
+           <property name="pageStep">
+            <number>15</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+           <property name="tickInterval">
+            <number>15</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Y min</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_2">
+           <property name="maximum">
+            <number>360</number>
+           </property>
+           <property name="singleStep">
+            <number>16</number>
+           </property>
+           <property name="pageStep">
+            <number>15</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+           <property name="tickInterval">
+            <number>15</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Y max</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_6">
+           <property name="maximum">
+            <number>360</number>
+           </property>
+           <property name="singleStep">
+            <number>16</number>
+           </property>
+           <property name="pageStep">
+            <number>15</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Z min</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_3">
+           <property name="maximum">
+            <number>360</number>
+           </property>
+           <property name="singleStep">
+            <number>16</number>
+           </property>
+           <property name="pageStep">
+            <number>15</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+           <property name="tickInterval">
+            <number>15</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Z max</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="horizontalSlider_5">
+           <property name="maximum">
+            <number>360</number>
+           </property>
+           <property name="singleStep">
+            <number>16</number>
+           </property>
+           <property name="pageStep">
+            <number>15</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="plainTextEdit">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder>horizontalSlider_4</zorder>
+      <zorder>horizontalSlider_5</zorder>
+      <zorder>horizontalSlider_6</zorder>
+      <zorder>label</zorder>
+      <zorder>label_2</zorder>
+      <zorder>label_3</zorder>
+      <zorder>label_4</zorder>
+      <zorder>label_5</zorder>
+      <zorder>label_6</zorder>
+      <zorder>horizontalSlider_2</zorder>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -286,13 +419,19 @@
    <container>1</container>
    <slots>
     <slot>valueChangedSlot(int)</slot>
+    <slot>valueChangedSlotMax(int)</slot>
    </slots>
   </customwidget>
   <customwidget>
-   <class>MainWidget</class>
+   <class>MyGLWidget</class>
    <extends>QWidget</extends>
-   <header location="global">mainwidget.h</header>
+   <header>myglwidget.h</header>
    <container>1</container>
+   <slots>
+    <slot>setXRotation(int)</slot>
+    <slot>setYRotation(int)</slot>
+    <slot>setZRotation(int)</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -311,8 +450,8 @@
    <slot>valueChangedSlot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>340</x>
-     <y>436</y>
+     <x>811</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>226</x>
@@ -327,8 +466,8 @@
    <slot>valueChangedSlot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>327</x>
-     <y>457</y>
+     <x>811</x>
+     <y>280</y>
     </hint>
     <hint type="destinationlabel">
      <x>240</x>
@@ -343,12 +482,108 @@
    <slot>valueChangedSlot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>477</y>
+     <x>811</x>
+     <y>381</y>
     </hint>
     <hint type="destinationlabel">
-     <x>350</x>
-     <y>347</y>
+     <x>373</x>
+     <y>549</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>myGLWidget</receiver>
+   <slot>setXRotation(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>811</x>
+     <y>178</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>812</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>myGLWidget</receiver>
+   <slot>setYRotation(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>811</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>812</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>myGLWidget</receiver>
+   <slot>setZRotation(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>811</x>
+     <y>381</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>812</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>chart_1</receiver>
+   <slot>valueChangedSlotMax(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>726</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>577</x>
+     <y>218</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_6</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>chart_3</receiver>
+   <slot>valueChangedSlotMax(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>702</x>
+     <y>319</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>546</x>
+     <y>319</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_5</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>chart_2</receiver>
+   <slot>valueChangedSlotMax(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>706</x>
+     <y>426</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>558</x>
+     <y>435</y>
     </hint>
    </hints>
   </connection>

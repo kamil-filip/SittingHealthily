@@ -8,6 +8,7 @@
 #include <QtSerialPort/QSerialPort>
 #include <mutex>
 #include "streamdecoder.h"
+#include <QBasicTimer>
 
 
 QT_BEGIN_NAMESPACE
@@ -56,18 +57,10 @@ private slots:
 
     void handleError(QSerialPort::SerialPortError error);
 
-
-
-    void updateChart1();
-    void updateChart2();
-    void updateChart3();
-
-    void handleButton();
-
     void startRecording();
     void pauseRecording();
     void stopRecording();
-
+    void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;
 
 
 
@@ -76,6 +69,10 @@ private:
     void initActionsConnections();
 
 private:
+    bool d_startRecording;
+    bool d_pauseRecording;
+    bool d_stopRecording;
+
     void callFromThread();
     void showStatusMessage(const QString &message);
     float decodeFloat(QString inString);
@@ -83,8 +80,10 @@ private:
 
 
     std::vector<float> quaternionToEuler(std::vector<float> const  &q);
+    std::vector<float> eurlers;
+    void pressRecordingButton(bool &button);
     std::mutex myMutex;
-
+    QBasicTimer timer;
 
     Ui::MainWindow *ui;
     QLabel *status;

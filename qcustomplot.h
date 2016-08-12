@@ -1894,7 +1894,7 @@ protected:
 private slots:
 
   void valueChangedSlot(int number);
-
+  void valueChangedSlotMax(int number);
 
 
   // non-virtual methods:
